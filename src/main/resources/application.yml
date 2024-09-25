@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gradosytitulos
+
+  datasource:
+    url: jdbc:postgresql://localhost:5436/gradosytitulos
+    username: user
+    password: secret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+server:
+  port: 9293

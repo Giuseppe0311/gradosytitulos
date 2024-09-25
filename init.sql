@@ -1,0 +1,1 @@
+CREATE DATABASE gradosytitulos_keycloak;
