@@ -2,6 +2,7 @@ package com.posgrado.gradosytitulos.rest;
 import com.posgrado.gradosytitulos.dto.mappers.DTOMapper;
 import com.posgrado.gradosytitulos.services.CrudService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;

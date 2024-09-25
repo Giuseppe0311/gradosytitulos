@@ -3,6 +3,7 @@ package com.posgrado.gradosytitulos.services;
 import com.posgrado.gradosytitulos.domain.DomainObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.NoSuchElementException;

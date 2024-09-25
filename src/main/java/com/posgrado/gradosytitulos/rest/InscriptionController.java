@@ -12,9 +12,11 @@ import com.posgrado.gradosytitulos.dto.mappers.inscription.InscriptionViewMapper
 import com.posgrado.gradosytitulos.services.CrudService;
 import com.posgrado.gradosytitulos.services.InscriptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,6 +31,11 @@ public class InscriptionController  extends AbstractCrudController<InscriptionCr
     private final InscriptionUpdateMapper updateMapper;
 
     private final InscriptionViewMapper viewMapper;
+
+    @Override
+    public List<InscriptionView> getAll() {
+        return super.getAll();
+    }
 
     @Override
     protected CrudService<Inscriptions, Long> getService() {
