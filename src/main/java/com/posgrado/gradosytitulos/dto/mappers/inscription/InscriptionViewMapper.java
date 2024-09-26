@@ -22,7 +22,7 @@ public class InscriptionViewMapper implements DTOMapper<Inscriptions, Inscriptio
                 studentsViewMapper.map(inscriptions.getStudent()),
                 programViewMapper.map(inscriptions.getProgram()),
                 inscriptions.getInscriptionDate(),
-                inscriptions.getIncriptionStatus()
+                inscriptions.getInscriptionStatus()
 
         );
     }

@@ -1,23 +1,22 @@
 package com.posgrado.gradosytitulos.dto.mappers.program;
 
 
-import com.posgrado.gradosytitulos.domain.Program;
+import com.posgrado.gradosytitulos.domain.Programs;
 import com.posgrado.gradosytitulos.dto.dto.progam.ProgramUpdate;
 import com.posgrado.gradosytitulos.dto.mappers.DTOMapper;
 import com.posgrado.gradosytitulos.repository.DegreeRepository;
-import com.posgrado.gradosytitulos.repository.ProgramRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ProgramUpdateMapper implements DTOMapper<ProgramUpdate, Program> {
+public class ProgramUpdateMapper implements DTOMapper<ProgramUpdate, Programs> {
 
     private final DegreeRepository repository;
 
     @Override
-    public Program map(ProgramUpdate programUpdate) {
-        return Program.builder()
+    public Programs map(ProgramUpdate programUpdate) {
+        return Programs.builder()
                 .name(programUpdate.name())
                 .description(programUpdate.description())
                 .duration(programUpdate.duration())

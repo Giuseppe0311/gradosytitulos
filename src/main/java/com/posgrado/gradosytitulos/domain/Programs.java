@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Program extends EntitySuperClass implements DomainObject<Long> {
+public class Programs extends EntitySuperClass implements DomainObject<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

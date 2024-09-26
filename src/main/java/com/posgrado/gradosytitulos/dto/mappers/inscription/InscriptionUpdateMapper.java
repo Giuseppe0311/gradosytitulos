@@ -4,7 +4,6 @@ package com.posgrado.gradosytitulos.dto.mappers.inscription;
 import com.posgrado.gradosytitulos.domain.Inscriptions;
 import com.posgrado.gradosytitulos.dto.dto.Inscription.InscriptionUpdate;
 import com.posgrado.gradosytitulos.dto.mappers.DTOMapper;
-import com.posgrado.gradosytitulos.repository.InscriptionRepository;
 import com.posgrado.gradosytitulos.repository.ProgramRepository;
 import com.posgrado.gradosytitulos.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class InscriptionUpdateMapper  implements DTOMapper<InscriptionUpdate, In
                         )
                 )
                 .inscriptionDate(inscriptionUpdate.inscriptionDate())
-                .incriptionStatus(inscriptionUpdate.incriptionStatus())
+                .inscriptionStatus(inscriptionUpdate.incriptionStatus())
                 .build();
     }
 }

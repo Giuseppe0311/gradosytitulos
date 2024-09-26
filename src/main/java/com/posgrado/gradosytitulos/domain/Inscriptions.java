@@ -18,8 +18,8 @@ public class Inscriptions extends EntitySuperClass implements DomainObject<Long>
     @ManyToOne
     private Students student;
     @ManyToOne
-    private Program program;
+    private Programs program;
     private LocalDate inscriptionDate;
-    private  InscriptionStatus incriptionStatus;
+    private  InscriptionStatus inscriptionStatus;
 
 }

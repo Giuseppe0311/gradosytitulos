@@ -30,7 +30,7 @@ public class InscriptionCreateMapper implements DTOMapper<InscriptionCreate, Ins
                         )
                 )
                 .inscriptionDate(inscriptionCreate.inscriptionDate())
-                .incriptionStatus(inscriptionCreate.incriptionStatus())
+                .inscriptionStatus(inscriptionCreate.incriptionStatus())
                 .build();
     }
 }

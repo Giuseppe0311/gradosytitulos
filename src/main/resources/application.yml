@@ -7,9 +7,14 @@ spring:
     username: user
     password: secret
     driver-class-name: org.postgresql.Driver
+  flyway:
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    url: jdbc:postgresql://localhost:5436/gradosytitulos
+    locations: db.migration
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
   security:
     oauth2:
       resourceserver:
@@ -24,9 +29,3 @@ jwt:
       resource-id: gradosytitulos
 server:
   port: 9293
-logging:
-  level:
-    org:
-      keycloak:
-        DEBUG
-debug: true
