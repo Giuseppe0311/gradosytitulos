@@ -25,7 +25,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers("/create-user").permitAll();
+                    http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();  // Permitir acceso a Swagger
                     http.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)))
