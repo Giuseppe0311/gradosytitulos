@@ -13,8 +13,7 @@ import com.posgrado.gradosytitulos.services.CrudService;
 import com.posgrado.gradosytitulos.services.InscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,8 @@ public class InscriptionController  extends AbstractCrudController<InscriptionCr
     private final InscriptionUpdateMapper updateMapper;
 
     private final InscriptionViewMapper viewMapper;
+
+    private static final String IDINSCRIPTION = "id";
 
     @Override
     public List<InscriptionView> getAll() {
@@ -58,7 +59,25 @@ public class InscriptionController  extends AbstractCrudController<InscriptionCr
     }
 
     @Override
+    @GetMapping("/{" + IDINSCRIPTION + "}")
+    public InscriptionView getById(Map<String, String> idMap) {
+        return super.getById(idMap);
+    }
+
+    @Override
+    @PutMapping("/{" + IDINSCRIPTION + "}")
+    public InscriptionView update(InscriptionUpdate updateDTO, Map<String, String> idMap) {
+        return super.update(updateDTO, idMap);
+    }
+
+    @Override
+    @DeleteMapping("/delete/{" + IDINSCRIPTION + "}")
+    public void delete(Map<String, String> idMap) {
+        super.delete(idMap);
+    }
+
+    @Override
     protected DTOMapper<Map<String, String>, Long> getIdMapper() {
-        return id -> Long.parseLong(id.get("id"));
+        return id -> Long.parseLong(id.get(IDINSCRIPTION));
     }
 }

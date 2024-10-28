@@ -13,8 +13,7 @@ import com.posgrado.gradosytitulos.services.DegreeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ public class DegreeController extends AbstractCrudController<DegreesCreate, Degr
     private final DegreeCreateMapper createMapper;
     private final DegreeUpdateMapper updateMapper;
     private final DegreeViewMapper viewMapper;
+    private static final String IDGRADO = "id";
     @Override
     protected CrudService<Degrees, Long> getService() {
         return service;
@@ -48,7 +48,25 @@ public class DegreeController extends AbstractCrudController<DegreesCreate, Degr
     }
 
     @Override
+    @GetMapping("/{" + IDGRADO + "}")
+    public DegreesViewDTO getById(Map<String, String> idMap) {
+        return super.getById(idMap);
+    }
+
+    @Override
+    @PutMapping("/{" + IDGRADO + "}")
+    public DegreesViewDTO update(DegreesUpdate updateDTO, Map<String, String> idMap) {
+        return super.update(updateDTO, idMap);
+    }
+
+    @Override
+    @DeleteMapping("/delete/{" + IDGRADO + "}")
+    public void delete(Map<String, String> idMap) {
+        super.delete(idMap);
+    }
+
+    @Override
     protected DTOMapper<Map<String, String>, Long> getIdMapper() {
-        return id->Long.parseLong(id.get("id"));
+        return id->Long.parseLong(id.get(IDGRADO));
     }
 }
