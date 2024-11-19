@@ -16,10 +16,9 @@ public record StudentsUpdate(
         String email,
         @NotBlank
         String phone,
-        @NotBlank
         String photo,
         @NotNull
-        Integer degreeId
+        Long degreeId
 
 ) {
 }

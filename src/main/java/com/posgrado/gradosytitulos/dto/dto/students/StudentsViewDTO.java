@@ -8,7 +8,7 @@ public record StudentsViewDTO(
         String maternalSurname,
         String email,
         String phone,
-        Integer degreeId,
+        Long degreeId,
         String photo
 ) {
 }

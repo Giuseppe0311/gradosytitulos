@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS students (
                                         maternal_surname VARCHAR(255),
                                         email VARCHAR(255) NOT NULL,
                                         phone VARCHAR(50),
-                                        grade_id INTEGER,
+                                        grade_id BIGINT,
                                         photo TEXT,
                                         status BOOLEAN DEFAULT TRUE NOT NULL
 );

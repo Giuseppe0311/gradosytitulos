@@ -17,7 +17,7 @@ public record StudentsCreate (
         @NotBlank
         String phone,
         @NotNull
-        Integer degreeId,
+        Long degreeId,
         String photo
 ) {
 }

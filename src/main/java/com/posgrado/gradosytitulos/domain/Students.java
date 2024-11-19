@@ -24,7 +24,7 @@ public class Students extends EntitySuperClass implements DomainObject<Long>  {
     private String maternalSurname;
     private String email;
     private String phone;
-    private Integer gradeId;
+    private Long gradeId;
     private String photo;
 
 }

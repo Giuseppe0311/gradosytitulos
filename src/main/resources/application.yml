@@ -21,7 +21,8 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/gradosytitulos
           jwk-set-uri: http://localhost:8080/realms/gradosytitulos/protocol/openid-connect/certs
-
+keycloack:
+   url: http://localhost:8080/realms/gradosytitulos/protocol/openid-connect/token
 jwt:
   auth:
     converter:
@@ -29,3 +30,8 @@ jwt:
       resource-id: gradosytitulos
 server:
   port: 9293
+
+springdoc:
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha

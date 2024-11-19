@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();  // Permitir acceso a Swagger
+                    http.requestMatchers("/api/v1/auth/**").permitAll();  // Permitir acceso a /auth/**
                     http.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
