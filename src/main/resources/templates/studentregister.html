@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Exitoso - Sistema de Grados y Títulos UNSM</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px 0;">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <!-- Encabezado con logo -->
+                <tr>
+                    <td style="text-align: center; padding: 20px; background-color: #f8f8f8; color: #ffffff;">
+                        <img src="https://unsm.edu.pe/wp-content/uploads/2019/01/Logo-UNSM.png" alt="Logo UNSM" style="height: 50px;">
+                        <h1 style="margin: 0; font-size: 24px;">Sistema de Grados y Títulos</h1>
+                    </td>
+                </tr>
+                <!-- Título del mensaje -->
+                <tr>
+                    <td style="text-align: center; padding: 20px;">
+                        <h2 style="color: #333333; font-size: 20px;">¡Enhorabuena, tu registro ha sido exitoso!</h2>
+                    </td>
+                </tr>
+                <!-- Contenido principal -->
+                <tr>
+                    <td style="padding: 0 30px 20px; text-align: center; font-size: 16px; color: #666666;">
+                        <p>¡Hola <span style="font-weight: bold;" th:text="${name}"></span>!</p>
+                        <p>Nos complace informarte que has sido registrado con éxito en el <strong>Sistema de Grados y Títulos</strong> de la Universidad Nacional de San Martín.</p>
+                        <p>Estaremos en contacto contigo para informarte sobre los próximos pasos del proceso.</p>
+                    </td>
+                </tr>
+                <!-- Mensaje adicional -->
+                <tr>
+                    <td style="padding: 0 30px;">
+                        <table width="100%" style="background-color: #eef2ff; border: 1px solid #93c5fd; border-radius: 5px; padding: 15px;">
+                            <tr>
+                                <td style="color: #1e3a8a; font-size: 14px; text-align: center;">
+                                    <strong>¿Tienes preguntas?</strong><br>
+                                    Comunícate con nosotros a través de nuestro correo <a href="mailto:gradosytitulos@unsm.edu.pe" style="color: #2563eb; text-decoration: none;">gradosytitulos@unsm.edu.pe</a>.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- Footer -->
+                <tr>
+                    <td style="text-align: center; padding: 20px; font-size: 12px; color: #999999;">
+                        Universidad Nacional de San Martín <br>
+                        &copy; 2024 Todos los derechos reservados.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

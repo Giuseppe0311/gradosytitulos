@@ -10,7 +10,12 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-
+  maildev:
+    image: 'maildev/maildev'
+    container_name: 'maildev'
+    ports:
+      - '1080:1080'  # Interfaz web para visualizar correos (http://localhost:1080)
+      - '1025:1025' # Puerto SMTP para enviar correos
 
   pgadmin:
     image: 'dpage/pgadmin4'
