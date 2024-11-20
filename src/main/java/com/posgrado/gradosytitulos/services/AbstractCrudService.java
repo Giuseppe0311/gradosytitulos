@@ -24,16 +24,19 @@ public abstract class AbstractCrudService<T extends DomainObject<ID>, ID> implem
 
     @Override
     public List<T> findAll() {
+        log.info("Finding all records");
         return (List<T>) getRepository().findAll();
     }
 
     @Override
     public Optional<T> getById(ID id) {
+        log.info("Finding record by id: {}", id);
         return getRepository().findById(id);
     }
 
     @Override
     public T update(ID id, T obj) {
+        log.info("Updating record by id: {}", id);
         Optional<T> fetchedObj = getRepository().findById(id);
         if (fetchedObj.isPresent()) {
             obj.setId(id);
@@ -46,6 +49,7 @@ public abstract class AbstractCrudService<T extends DomainObject<ID>, ID> implem
 
     @Override
     public void delete(ID id) {
+        log.info("Deleting record by id: {}", id);
         Optional<T> toDeleteOpt = getRepository().findById(id);
         if (toDeleteOpt.isPresent()) {
             getRepository().deleteById(id);

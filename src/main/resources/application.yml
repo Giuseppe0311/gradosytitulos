@@ -37,6 +37,12 @@ jwt:
 server:
   port: 9293
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+
 springdoc:
   swagger-ui:
     operations-sorter: alpha

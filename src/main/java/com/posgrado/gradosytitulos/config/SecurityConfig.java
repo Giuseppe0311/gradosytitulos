@@ -36,6 +36,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();  // Permitir acceso a Swagger
                     http.requestMatchers("/api/v1/auth/**").permitAll();  // Permitir acceso a /auth/**
+                    //allow prometheus
+                    http.requestMatchers("/actuator/**").permitAll();
                     http.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
