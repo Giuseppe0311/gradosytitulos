@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -62,24 +64,28 @@ public class AuthController {
                 HttpMethod.POST,
                 entity,
                 KeycloackAuthResponse.class);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            try {
-                String email = tokenHandler.getBasicClaimFromToken(Objects.requireNonNull(response.getBody()).access_token(), "email");
-                String given_name = tokenHandler.getBasicClaimFromToken(Objects.requireNonNull(response.getBody()).access_token(), "given_name");
 
-                emailService.sendEmail(new EmailDTO(
-                                "login",
-                                email,
-                                "Inicio de Sesión",
-                                given_name,
-                                "Se ha iniciado sesión en el sistema a las " + LocalDateTime.now(),
-                                null
-                        )
-                );
-            } catch (MessagingException e) {
-                e.printStackTrace();
+        if (response.getStatusCode().is2xxSuccessful()) {
+            KeycloackAuthResponse authResponse = response.getBody();
+
+            if (authResponse != null) {
+                try {
+                    String email = tokenHandler.getBasicClaimFromToken(authResponse.access_token(), "email");
+                    String givenName = tokenHandler.getBasicClaimFromToken(authResponse.access_token(), "given_name");
+
+                    emailService.sendEmail(new EmailDTO(
+                            "login",
+                            email,
+                            "Inicio de Sesión",
+                            givenName,
+                            "Se ha iniciado sesión en el sistema a las " + LocalDateTime.now(),
+                            null
+                    ));
+                } catch (MessagingException | RuntimeException e) {
+                    log.error("Hubo un error", e);
+                }
             }
-            return ResponseEntity.ok(response.getBody());
+            return ResponseEntity.ok(authResponse);
         } else {
             return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
         }

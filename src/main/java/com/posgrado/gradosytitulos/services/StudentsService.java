@@ -6,9 +6,11 @@ import com.posgrado.gradosytitulos.utils.email.EmailDTO;
 import com.posgrado.gradosytitulos.utils.email.IEmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class StudentsService extends AbstractCrudService<Students, Long> {
@@ -34,8 +36,8 @@ public class StudentsService extends AbstractCrudService<Students, Long> {
                             null
                     ));
 
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (MessagingException | RuntimeException e) {
+            log.error("Hubo un error", e);
         }
         return super.create(obj);
     }
