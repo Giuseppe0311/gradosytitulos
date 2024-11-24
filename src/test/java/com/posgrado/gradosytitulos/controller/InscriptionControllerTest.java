@@ -2,6 +2,8 @@ package com.posgrado.gradosytitulos.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.posgrado.gradosytitulos.domain.InscriptionStatus;
 import com.posgrado.gradosytitulos.domain.Inscriptions;
 import com.posgrado.gradosytitulos.dto.dto.Inscription.InscriptionCreate;
 import com.posgrado.gradosytitulos.dto.dto.Inscription.InscriptionUpdate;
@@ -10,6 +12,7 @@ import com.posgrado.gradosytitulos.dto.mappers.inscription.InscriptionCreateMapp
 import com.posgrado.gradosytitulos.dto.mappers.inscription.InscriptionUpdateMapper;
 import com.posgrado.gradosytitulos.dto.mappers.inscription.InscriptionViewMapper;
 import com.posgrado.gradosytitulos.services.InscriptionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +23,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.print.attribute.standard.Media;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,11 +51,26 @@ public class InscriptionControllerTest {
     @MockBean
     private InscriptionCreateMapper inscriptionCreateMapper;
 
+    private InscriptionView inscriptionView;
+
+    @BeforeEach
+    void setUp() {
+        inscriptionView = new InscriptionView(
+                1L,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
 
     @Test
     @WithMockUser(roles = "admin_client")
     void testGetAllInscriptions() throws Exception {
-        InscriptionView inscriptionView = new InscriptionView(1L, null, null, null, null);
         Inscriptions inscriptions = new Inscriptions();
         when(inscriptionService.findAll()).thenReturn(List.of(inscriptions));
         when(inscriptionViewMapper.map(inscriptions)).thenReturn(inscriptionView);
@@ -66,7 +85,6 @@ public class InscriptionControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testGetInscriptionById() throws Exception {
-        InscriptionView inscriptionView = new InscriptionView(1L, null, null, null, null);
         Inscriptions inscriptions = new Inscriptions();
         Long id = 1L;
         when(inscriptionService.getById(id)).thenReturn(Optional.of(inscriptions));
@@ -82,12 +100,11 @@ public class InscriptionControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testSaveInscription() throws Exception {
-        InscriptionView inscriptionView = new InscriptionView(1L, null, null, null, null);
         InscriptionCreate inscriptionCreate = new InscriptionCreate(
-                null,
-                null,
-                null,
-                null
+                123L, // idStudent válido
+                456L, // idProgram válido
+                LocalDate.of(2023, 11, 24),
+                InscriptionStatus.APPROVED
         );
         Inscriptions inscriptions = new Inscriptions();
         when(inscriptionCreateMapper.map(inscriptionCreate)).thenReturn(inscriptions);
@@ -95,6 +112,7 @@ public class InscriptionControllerTest {
         when(inscriptionViewMapper.map(inscriptions)).thenReturn(inscriptionView);
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         String inscriptionJson = objectMapper.writeValueAsString(inscriptionCreate);
 
         mockMvc.perform(post("/api/v1/inscription")
@@ -109,12 +127,11 @@ public class InscriptionControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testUpdateInscription() throws Exception {
-        InscriptionView inscriptionView = new InscriptionView(1L, null, null, null, null);
         InscriptionUpdate inscriptionUpdate = new InscriptionUpdate(
-                null,
-                null,
-                null,
-                null
+                123L, // idStudent válido
+                456L, // idProgram válido,
+                LocalDate.now(),
+                InscriptionStatus.APPROVED
         );
         Inscriptions inscriptions = new Inscriptions();
         Long id = 1L;
@@ -123,6 +140,7 @@ public class InscriptionControllerTest {
         when(inscriptionViewMapper.map(inscriptions)).thenReturn(inscriptionView);
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         String inscriptionJson = objectMapper.writeValueAsString(inscriptionUpdate);
 
         mockMvc.perform(put("/api/v1/inscription/{id}", id)

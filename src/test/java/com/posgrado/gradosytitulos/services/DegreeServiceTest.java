@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
+
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
@@ -27,12 +29,12 @@ public class DegreeServiceTest {
     private DegreeService degreeService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createDegree(){
+    void createDegree() {
         Degrees degree = objectToTest();
         when(degreeRepository.save(any(Degrees.class))).thenReturn(degree);
         Degrees result = degreeService.create(degree);
@@ -41,6 +43,7 @@ public class DegreeServiceTest {
         assertEquals(degree.getId(), result.getId());
         verify(degreeRepository, times(1)).save(any(Degrees.class));
     }
+
     @Test
     void findAll_ReturnsListOfDegrees() {
         List<Degrees> degrees = Arrays.asList(objectToTest(), new Degrees());
@@ -95,7 +98,7 @@ public class DegreeServiceTest {
         when(degreeRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(NoSuchElementException.class, () -> degreeService.update(99L, new Degrees())
-       );
+        );
 
         verify(degreeRepository, times(1)).findById(99L);
         verify(degreeRepository, never()).save(any(Degrees.class));
@@ -103,13 +106,17 @@ public class DegreeServiceTest {
 
     @Test
     void delete_WhenExists_DeletesDegree() {
-        when(degreeRepository.findById(1L)).thenReturn(Optional.of(objectToTest()));
-        doNothing().when(degreeRepository).deleteById(1L);
+
+        Degrees degreeToDelete = objectToTest();
+
+        when(degreeRepository.findById(1L)).thenReturn(Optional.of(degreeToDelete));
+
+        when(degreeRepository.save(degreeToDelete)).thenReturn(degreeToDelete);
 
         degreeService.delete(1L);
 
         verify(degreeRepository, times(1)).findById(1L);
-        verify(degreeRepository, times(1)).deleteById(1L);
+        verify(degreeRepository, times(1)).save(degreeToDelete);
     }
 
     @Test
@@ -123,7 +130,7 @@ public class DegreeServiceTest {
     }
 
 
-    public Degrees objectToTest(){
+    public Degrees objectToTest() {
         Degrees degree = new Degrees();
         degree.setId(1L);
         return degree;

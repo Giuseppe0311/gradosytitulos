@@ -1,8 +1,6 @@
 package com.posgrado.gradosytitulos.services;
 
-import com.posgrado.gradosytitulos.domain.Inscriptions;
 import com.posgrado.gradosytitulos.domain.Programs;
-import com.posgrado.gradosytitulos.repository.InscriptionRepository;
 import com.posgrado.gradosytitulos.repository.ProgramRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +28,12 @@ public class ProgramServiceTest {
     private ProgramService programService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createDegree(){
+    void createDegree() {
         Programs programs = objectToTest();
         when(programRepository.save(any(Programs.class))).thenReturn(programs);
         Programs result = programService.create(programs);
@@ -44,6 +42,7 @@ public class ProgramServiceTest {
         assertEquals(programs.getId(), result.getId());
         verify(programRepository, times(1)).save(any(Programs.class));
     }
+
     @Test
     void findAll_ReturnsListOfDegrees() {
         List<Programs> programs = Arrays.asList(objectToTest(), new Programs());
@@ -105,14 +104,15 @@ public class ProgramServiceTest {
     }
 
     @Test
-    void delete_WhenExists_DeletesDegree() {
-        when(programRepository.findById(1L)).thenReturn(Optional.of(objectToTest()));
-        doNothing().when(programRepository).deleteById(1L);
+    void delete_WhenExists_Program() {
+        Programs programs = objectToTest();
+        when(programRepository.findById(1L)).thenReturn(Optional.of(programs));
+        when(programRepository.save(programs)).thenReturn(programs);
 
         programService.delete(1L);
 
         verify(programRepository, times(1)).findById(1L);
-        verify(programRepository, times(1)).deleteById(1L);
+        verify(programRepository, times(1)).save(programs);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ProgramServiceTest {
     }
 
 
-    public Programs objectToTest(){
+    public Programs objectToTest() {
         Programs programs = new Programs();
         programs.setId(1L);
         return programs;

@@ -11,6 +11,7 @@ import com.posgrado.gradosytitulos.dto.mappers.students.StudentCreateMapper;
 import com.posgrado.gradosytitulos.dto.mappers.students.StudentsUpdateMapper;
 import com.posgrado.gradosytitulos.dto.mappers.students.StudentsViewMapper;
 import com.posgrado.gradosytitulos.services.StudentsService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -45,18 +46,30 @@ public class StudentControllerTest {
     @MockBean
     private StudentCreateMapper studentCreateMapper;
 
-    @Test
-    @WithMockUser(roles = "admin_client")
-    void testGetAllStudents() throws Exception {
-        StudentsViewDTO studentsViewDTO = new StudentsViewDTO(
+    private StudentsViewDTO studentsViewDTO;
+
+    @BeforeEach
+    void setUp() {
+        studentsViewDTO = new StudentsViewDTO(
                 1L,
                 null,
                 null,
                 null,
                 null,
                 null, null,
-                null, null
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
         );
+    }
+
+    @Test
+    @WithMockUser(roles = "admin_client")
+    void testGetAllStudents() throws Exception {
         Students students = new Students();
         when(studentsService.findAll()).thenReturn(List.of(students));
         when(studentViewMapper.map(students)).thenReturn(studentsViewDTO);
@@ -70,15 +83,6 @@ public class StudentControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testGetSudentsById() throws Exception {
-        StudentsViewDTO studentsViewDTO = new StudentsViewDTO(
-                1L,
-                null,
-                null,
-                null,
-                null,
-                null, null,
-                null, null
-        );
         Students students = new Students();
         Long id = 1L;
         when(studentsService.getById(id)).thenReturn(Optional.of(students));
@@ -92,25 +96,15 @@ public class StudentControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testSaveStudent() throws Exception {
-
-        StudentsViewDTO studentsViewDTO = new StudentsViewDTO(
-                1L,
-                null,
-                null,
-                null,
-                null,
-                null, null,
-                1L, null
-        );
         StudentsCreate studentsCreate = new StudentsCreate(
-                "12314124",
-                "12",
-                "EWE",
-                "WEWE",
-                "null",
-                "NULL",
-                1L,
-                null
+                "12345678",
+                "Juan",
+                "Pérez",
+                "Gómez",
+                "juan.perez@email.com",
+                "123456789",
+                2L,
+                "photo.jpg"
         );
 
         Students students = new Students();
@@ -128,41 +122,33 @@ public class StudentControllerTest {
         verify(studentCreateMapper).map(studentsCreate);
         verify(studentViewMapper).map(students);
     }
+
     @Test
     @WithMockUser(roles = "admin_client")
     void testUpdateStudent() throws Exception {
         Long id = 1L;
-        StudentsViewDTO studentsViewDTO = new StudentsViewDTO(
-                1L,
-                null,
-                null,
-                null,
-                null,
-                null, null,
-                1L, null
-        );
         Students students = new Students();
         StudentsUpdate studentsUpdate = new StudentsUpdate(
-                "12314124",
-                "12",
-                "EWE",
-                "WEWE",
-                "null",
-                "NULL",
-                null,
-                1L
+                "12345678",
+                "Juan",
+                "Pérez",
+                "Gómez",
+                "juan.perez@email.com",
+                "123456789",
+                "photo.jpg",
+                2L
         );
         when(studentsUpdateMapper.map(studentsUpdate)).thenReturn(students);
-        when(studentsService.update(id,students)).thenReturn(students);
+        when(studentsService.update(id, students)).thenReturn(students);
         when(studentViewMapper.map(students)).thenReturn(studentsViewDTO);
         ObjectMapper objectMapper = new ObjectMapper();
         String studentJson = objectMapper.writeValueAsString(studentsUpdate);
-        mockMvc.perform(put("/api/v1/students/{id}",id)
+        mockMvc.perform(put("/api/v1/students/{id}", id)
                         .content(studentJson)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
-        verify(studentsService).update(id,students);
+        verify(studentsService).update(id, students);
         verify(studentsUpdateMapper).map(studentsUpdate);
         verify(studentViewMapper).map(students);
     }
@@ -172,7 +158,7 @@ public class StudentControllerTest {
     void testDeleteStudent() throws Exception {
         Long id = 1L;
         doNothing().when(studentsService).delete(id);
-        mockMvc.perform(delete("/api/v1/students/delete/{id}",id))
+        mockMvc.perform(delete("/api/v1/students/delete/{id}", id))
                 .andExpect(status().isNoContent());
         verify(studentsService).delete(id);
     }

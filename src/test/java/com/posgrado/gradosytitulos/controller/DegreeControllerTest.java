@@ -52,10 +52,9 @@ public class DegreeControllerTest {
     @WithMockUser(roles = "admin_client")
     void testGetAllDegrees() throws Exception {
 
-        DegreesViewDTO degreesViewDTO = new DegreesViewDTO(1L, "name");
         Degrees degrees = new Degrees();
         when(degreeService.findAll()).thenReturn(List.of(degrees));
-        when(degreeViewMapper.map(degrees)).thenReturn(degreesViewDTO);
+        when(degreeViewMapper.map(degrees)).thenReturn(getDegreesViewDTO());
 
         mockMvc.perform(get("/api/v1/degrees").content(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -68,10 +67,9 @@ public class DegreeControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testGetDegreeById() throws Exception {
-        DegreesViewDTO degreesViewDTO = new DegreesViewDTO(1L, "name");
         Degrees degrees = new Degrees();
         when(degreeService.getById(1L)).thenReturn(Optional.of(degrees));
-        when(degreeViewMapper.map(degrees)).thenReturn(degreesViewDTO);
+        when(degreeViewMapper.map(degrees)).thenReturn(getDegreesViewDTO());
 
         mockMvc.perform(get("/api/v1/degrees/1").content(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -83,12 +81,11 @@ public class DegreeControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testSaveDegreesById() throws Exception {
-        DegreesViewDTO degreesViewDTO = new DegreesViewDTO(1L, "name");
         DegreesCreate degreesCreate = new DegreesCreate("name");
         Degrees degrees = new Degrees();
         when(degreeCreateMapper.map(degreesCreate)).thenReturn(degrees);
         when(degreeService.create(degrees)).thenReturn(degrees);
-        when(degreeViewMapper.map(degrees)).thenReturn(degreesViewDTO);
+        when(degreeViewMapper.map(degrees)).thenReturn(getDegreesViewDTO());
 
         // Convertir el objeto a JSON
         ObjectMapper objectMapper = new ObjectMapper();
@@ -108,13 +105,12 @@ public class DegreeControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testUpdateDegreesById() throws Exception {
-        DegreesViewDTO degreesViewDTO = new DegreesViewDTO(1L, "name");
         Degrees degrees = new Degrees();
         Long id = 1L;
         DegreesUpdate degreesUpdate = new DegreesUpdate("name");
         when(degreeUpdateMapper.map(degreesUpdate)).thenReturn(degrees);
         when(degreeService.update(id, degrees)).thenReturn(degrees);
-        when(degreeViewMapper.map(degrees)).thenReturn(degreesViewDTO);
+        when(degreeViewMapper.map(degrees)).thenReturn(getDegreesViewDTO());
 
         // Convertir el objeto a JSON
         ObjectMapper objectMapper = new ObjectMapper();
@@ -141,6 +137,18 @@ public class DegreeControllerTest {
                 )
                 .andExpect(status().isNoContent());
         verify(degreeService).delete(id);
+    }
+
+    private DegreesViewDTO getDegreesViewDTO() {
+        return new DegreesViewDTO(
+                1L,
+                "name",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
     }
 
 }

@@ -29,12 +29,12 @@ public class InscriptionServiceTest {
     private InscriptionService inscriptionService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createDegree(){
+    void createDegree() {
         Inscriptions inscriptions = objectToTest();
         when(inscriptionRepository.save(any(Inscriptions.class))).thenReturn(inscriptions);
         Inscriptions result = inscriptionService.create(inscriptions);
@@ -43,6 +43,7 @@ public class InscriptionServiceTest {
         assertEquals(inscriptions.getId(), result.getId());
         verify(inscriptionRepository, times(1)).save(any(Inscriptions.class));
     }
+
     @Test
     void findAll_ReturnsListOfDegrees() {
         List<Inscriptions> inscriptions = Arrays.asList(objectToTest(), new Inscriptions());
@@ -105,13 +106,16 @@ public class InscriptionServiceTest {
 
     @Test
     void delete_WhenExists_DeletesDegree() {
-        when(inscriptionRepository.findById(1L)).thenReturn(Optional.of(objectToTest()));
-        doNothing().when(inscriptionRepository).deleteById(1L);
+
+        Inscriptions inscriptions = objectToTest();
+
+        when(inscriptionRepository.findById(1L)).thenReturn(Optional.of(inscriptions));
+        when(inscriptionRepository.save(inscriptions)).thenReturn(inscriptions);
 
         inscriptionService.delete(1L);
 
         verify(inscriptionRepository, times(1)).findById(1L);
-        verify(inscriptionRepository, times(1)).deleteById(1L);
+        verify(inscriptionRepository, times(1)).save(inscriptions);
     }
 
     @Test
@@ -125,7 +129,7 @@ public class InscriptionServiceTest {
     }
 
 
-    public Inscriptions objectToTest(){
+    public Inscriptions objectToTest() {
         Inscriptions inscription = new Inscriptions();
         inscription.setId(1L);
         return inscription;

@@ -9,6 +9,7 @@ import com.posgrado.gradosytitulos.dto.mappers.program.ProgramCreateMapper;
 import com.posgrado.gradosytitulos.dto.mappers.program.ProgramUpdateMapper;
 import com.posgrado.gradosytitulos.dto.mappers.program.ProgramVieweMapper;
 import com.posgrado.gradosytitulos.services.ProgramService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -44,18 +45,28 @@ public class ProgramControllerTest {
     @MockBean
     private ProgramCreateMapper programCreateMapper;
 
+    private ProgramView programView;
 
-    @Test
-    @WithMockUser(roles = "admin_client")
-    void testGetAllPrograms() throws Exception {
-
-        ProgramView programView = new ProgramView(
+    @BeforeEach
+    void setUp() {
+        programView = new ProgramView(
                 1L,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null,
                 null,
                 null
         );
+    }
+
+    @Test
+    @WithMockUser(roles = "admin_client")
+    void testGetAllPrograms() throws Exception {
+
         Programs program = new Programs();
 
         when(programService.findAll()).thenReturn(List.of(program));
@@ -69,13 +80,7 @@ public class ProgramControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testGetProgramById() throws Exception {
-        ProgramView programView = new ProgramView(
-                1L,
-                null,
-                null,
-                null,
-                null
-        );
+
         Programs program = new Programs();
         Long id = 1L;
         when(programService.getById(id)).thenReturn(Optional.of(program));
@@ -90,20 +95,13 @@ public class ProgramControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testSaveProgram() throws Exception {
-        ProgramView programView = new ProgramView(
-                1L,
-                null,
-                null,
-                null,
-                null
-        );
+
         Programs program = new Programs();
         ProgramCreate programCreate = new ProgramCreate(
-                null,
-                null,
-                null,
-                null,
-                null
+                "Ingeniería de Software",
+                "Programa de pregrado enfocado en desarrollo de software",
+                8,
+                1L
         );
         when(programCreateMapper.map(programCreate)).thenReturn(program);
         when(programService.create(program)).thenReturn(program);
@@ -123,18 +121,12 @@ public class ProgramControllerTest {
     @Test
     @WithMockUser(roles = "admin_client")
     void testUpdateProgram() throws Exception {
-        ProgramView programView = new ProgramView(
-                1L,
-                null,
-                null,
-                null,
-                null
-        );
+
         ProgramUpdate programUpdate = new ProgramUpdate(
-                null,
-                null,
-                null,
-                null
+                "Ingeniería de Software",
+                "Programa de pregrado enfocado en desarrollo de software",
+                8,
+                1L
         );
         Programs program = new Programs();
         Long id = 1L;

@@ -1,6 +1,5 @@
 package com.posgrado.gradosytitulos.services;
 
-import com.posgrado.gradosytitulos.domain.Programs;
 import com.posgrado.gradosytitulos.domain.Students;
 import com.posgrado.gradosytitulos.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +27,12 @@ public class StudensServiceTest {
     private StudentsService studentsService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createDegree(){
+    void createDegree() {
         Students students = objectToTest();
         when(studentRepository.save(any(Students.class))).thenReturn(students);
         Students result = studentsService.create(students);
@@ -42,6 +41,7 @@ public class StudensServiceTest {
         assertEquals(students.getId(), result.getId());
         verify(studentRepository, times(1)).save(any(Students.class));
     }
+
     @Test
     void findAll_ReturnsListOfDegrees() {
         List<Students> programs = Arrays.asList(objectToTest(), new Students());
@@ -100,14 +100,15 @@ public class StudensServiceTest {
     }
 
     @Test
-    void delete_WhenExists_DeletesDegree() {
-        when(studentRepository.findById(1L)).thenReturn(Optional.of(objectToTest()));
-        doNothing().when(studentRepository).deleteById(1L);
+    void delete_WhenExists_Student() {
+        Students students = objectToTest();
+        when(studentRepository.findById(1L)).thenReturn(Optional.of(students));
+        when(studentRepository.save(students)).thenReturn(students);
 
         studentsService.delete(1L);
 
         verify(studentRepository, times(1)).findById(1L);
-        verify(studentRepository, times(1)).deleteById(1L);
+        verify(studentRepository, times(1)).save(students);
     }
 
     @Test
@@ -121,7 +122,7 @@ public class StudensServiceTest {
     }
 
 
-    public Students objectToTest(){
+    public Students objectToTest() {
         Students students = new Students();
         students.setId(1L);
         return students;
