@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Students extends EntitySuperClass implements DomainObject<Long>  {
+public class Students extends EntitySuperClass implements DomainObject<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +27,8 @@ public class Students extends EntitySuperClass implements DomainObject<Long>  {
     private Long gradeId;
     private String photo;
 
+    @Override
+    public void changeStatus(Boolean status) {
+        this.setStatus(status);
+    }
 }

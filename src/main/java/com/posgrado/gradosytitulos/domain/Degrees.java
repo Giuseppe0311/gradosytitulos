@@ -14,4 +14,9 @@ public class Degrees extends EntitySuperClass implements DomainObject<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Override
+    public void changeStatus(Boolean status) {
+        this.setStatus(status);
+    }
 }

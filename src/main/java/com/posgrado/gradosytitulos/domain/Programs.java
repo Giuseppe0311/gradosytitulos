@@ -19,4 +19,8 @@ public class Programs extends EntitySuperClass implements DomainObject<Long> {
     @ManyToOne
     private  Degrees degree;
 
+    @Override
+    public void changeStatus(Boolean status) {
+        this.setStatus(status);
+    }
 }

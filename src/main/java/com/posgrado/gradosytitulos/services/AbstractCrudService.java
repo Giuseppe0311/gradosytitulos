@@ -15,6 +15,7 @@ public abstract class AbstractCrudService<T extends DomainObject<ID>, ID> implem
     private static final String NOT_FOUND = "Entity not found in database";
     private static final String LOG_NOT_FOUND_UPDATE = "Tried to update a not existing record";
     private static final String LOG_NOT_FOUND_DELETE = "Tried to delete a not existing record";
+
     protected abstract CrudRepository<T, ID> getRepository();
 
     @Override
@@ -49,10 +50,11 @@ public abstract class AbstractCrudService<T extends DomainObject<ID>, ID> implem
 
     @Override
     public void delete(ID id) {
-        log.info("Deleting record by id: {}", id);
         Optional<T> toDeleteOpt = getRepository().findById(id);
         if (toDeleteOpt.isPresent()) {
-            getRepository().deleteById(id);
+            T obj = toDeleteOpt.get();
+            obj.changeStatus(false);
+            getRepository().save(obj);
         } else {
             log.error(LOG_NOT_FOUND_DELETE);
             throw new NoSuchElementException(NOT_FOUND);

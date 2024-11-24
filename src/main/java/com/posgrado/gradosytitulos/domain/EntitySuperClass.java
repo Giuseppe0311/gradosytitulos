@@ -16,15 +16,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.OffsetDateTime;
 @MappedSuperclass
-@SQLRestriction("status = true")
-@SoftDelete(columnName = "status", strategy = SoftDeleteType.ACTIVE)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 public class EntitySuperClass {
-    @Column(insertable = false, updatable = false)
     private Boolean status = true;
-
     @CreatedDate
     private OffsetDateTime created;
     @LastModifiedDate

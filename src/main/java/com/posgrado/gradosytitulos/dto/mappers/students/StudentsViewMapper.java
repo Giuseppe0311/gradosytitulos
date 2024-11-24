@@ -19,7 +19,12 @@ public class StudentsViewMapper implements DTOMapper<Students, StudentsViewDTO> 
                 students.getEmail(),
                 students.getPhone(),
                 students.getGradeId(),
-                students.getPhoto()
+                students.getPhoto(),
+                students.getStatus(),
+                students.getCreated(),
+                students.getUpdated(),
+                students.getCreatedBy(),
+                students.getUpdatedBy()
         );
     }
 }

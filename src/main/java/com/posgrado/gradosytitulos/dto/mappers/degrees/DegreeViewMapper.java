@@ -11,7 +11,12 @@ public class DegreeViewMapper implements DTOMapper<Degrees, DegreesViewDTO> {
     public DegreesViewDTO map(Degrees degrees) {
         return new DegreesViewDTO(
                 degrees.getId(),
-                degrees.getName()
+                degrees.getName(),
+                degrees.getStatus(),
+                degrees.getCreated(),
+                degrees.getUpdated(),
+                degrees.getCreatedBy(),
+                degrees.getUpdatedBy()
         );
     }
 }

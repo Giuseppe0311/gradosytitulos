@@ -1,5 +1,7 @@
 package com.posgrado.gradosytitulos.dto.dto.students;
 
+import java.time.OffsetDateTime;
+
 public record StudentsViewDTO(
         Long id,
         String documentNumber,
@@ -9,6 +11,11 @@ public record StudentsViewDTO(
         String email,
         String phone,
         Long degreeId,
-        String photo
+        String photo,
+        Boolean status,
+        OffsetDateTime created,
+        OffsetDateTime updated,
+        String createdBy,
+        String updatedBy
 ) {
 }

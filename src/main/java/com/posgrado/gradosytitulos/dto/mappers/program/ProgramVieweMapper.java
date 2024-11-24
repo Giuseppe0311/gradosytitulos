@@ -20,7 +20,12 @@ public class ProgramVieweMapper implements DTOMapper<Programs, ProgramView> {
                 programs.getName(),
                 programs.getDescription(),
                 programs.getDuration(),
-                degreeViewMapper.map(programs.getDegree())
+                degreeViewMapper.map(programs.getDegree()),
+                programs.getStatus(),
+                programs.getCreated(),
+                programs.getUpdated(),
+                programs.getCreatedBy(),
+                programs.getUpdatedBy()
         );
     }
 }

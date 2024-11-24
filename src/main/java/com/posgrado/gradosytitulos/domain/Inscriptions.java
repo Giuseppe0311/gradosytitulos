@@ -22,4 +22,8 @@ public class Inscriptions extends EntitySuperClass implements DomainObject<Long>
     private LocalDate inscriptionDate;
     private  InscriptionStatus inscriptionStatus;
 
+    @Override
+    public void changeStatus(Boolean status) {
+        this.setStatus(status);
+    }
 }
